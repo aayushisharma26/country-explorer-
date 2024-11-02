@@ -20,7 +20,6 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Input and Select */
 input[type="text"],
 select {
     padding: 15px; 
@@ -52,7 +51,6 @@ main {
     margin: 0 auto;
 }
 
-/* Country Cards Container */
 #countries-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
@@ -63,7 +61,6 @@ main {
 }
 
 
-/* Individual Country Card */
 .country-card {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -87,7 +84,6 @@ button {
     font-size: 16px; 
 }
 
-/* Favorites Section */
 .favorites {
     margin-top: 30px;
     background-color: #e0e0e0;
@@ -101,7 +97,6 @@ button {
     margin-bottom: 15px;
 }
 
-/* Back Button */
 .back-button {
     background-color: white;
     color: #007BFF;
@@ -118,7 +113,6 @@ button {
     color: white;
 }
 
-/* Country Details */
 #country-details {
     background-color: white;
     border-radius: 10px;
@@ -134,7 +128,6 @@ button {
     border-radius: 10px;
 }
 
-/* Media Queries */
 @media (max-width: 1200px) {
     #countries-container {
         grid-template-columns: repeat(2, 1fr); 
@@ -172,7 +165,6 @@ button {
 
 
 
-/* styles.css */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
