@@ -3,11 +3,11 @@ const countriesContainer = document.getElementById("countries-container");
 const searchInput = document.getElementById("search-input");
 const loadMoreButton = document.getElementById("load-more");
 const favoritesContainer = document.getElementById("favorites-list");
-const filterDropdown = document.getElementById("filter-dropdown");
+const favoritesSection = document.getElementById("favorites-section");
 
 let countries = [];
 let displayedCountries = [];
-let favorites = [];
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 const pageSize = 10;
 let currentPage = 1;
 
@@ -28,46 +28,21 @@ function displayCountries() {
     displayedCountries.forEach(country => {
         const countryCard = document.createElement("div");
         countryCard.classList.add("country-card");
+        
+        const isFavorite = favorites.includes(country.name.common);
+
         countryCard.innerHTML = `
             <img src="${country.flags.svg}" alt="${country.name.common} flag">
             <h2>${country.name.common}</h2>
             <button onclick="toggleFavorite('${country.name.common}')">
-                ${favorites.includes(country.name.common) ? 'Remove from Favorites' : 'Add to Favorites'}
+                <span class="heart-icon">${isFavorite ? '❤️' : '🤍'}</span> 
+                ${isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
             </button>
             <button onclick="showDetails('${country.name.common}')">Details</button>
         `;
         countriesContainer.appendChild(countryCard);
     });
 }
-
-// Load more countries on button click
-loadMoreButton.addEventListener("click", () => {
-    currentPage++;
-    displayCountries();
-});
-
-// Search countries
-searchInput.addEventListener("input", (e) => {
-    const query = e.target.value.toLowerCase();
-    const filteredCountries = countries.filter(country => 
-        country.name.common.toLowerCase().includes(query)
-    );
-    countriesContainer.innerHTML = "";
-    displayedCountries = filteredCountries.slice(0, currentPage * pageSize);
-    displayedCountries.forEach(country => {
-        const countryCard = document.createElement("div");
-        countryCard.classList.add("country-card");
-        countryCard.innerHTML = `
-            <img src="${country.flags.svg}" alt="${country.name.common} flag">
-            <h2>${country.name.common}</h2>
-            <button onclick="toggleFavorite('${country.name.common}')">
-                ${favorites.includes(country.name.common) ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
-            <button onclick="showDetails('${country.name.common}')">Details</button>
-        `;
-        countriesContainer.appendChild(countryCard);
-    });
-});
 
 // Toggle favorite countries
 function toggleFavorite(countryName) {
@@ -82,6 +57,7 @@ function toggleFavorite(countryName) {
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
     updateFavorites();
+    displayCountries(); // Update icons in cards
 }
 
 // Show favorite countries
@@ -89,9 +65,11 @@ function updateFavorites() {
     favoritesContainer.innerHTML = "";
     favorites.forEach(fav => {
         const favoriteItem = document.createElement("div");
+        favoriteItem.classList.add("favorite-item");
         favoriteItem.textContent = fav;
         favoritesContainer.appendChild(favoriteItem);
     });
+    favoritesSection.style.display = favorites.length > 0 ? "block" : "none";
 }
 
 // Show country details
@@ -115,32 +93,6 @@ function showDetails(countryName) {
 
 // Load favorites from local storage on page load
 window.onload = () => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    favorites = storedFavorites;
     updateFavorites();
     loadCountries();
 };
-
-// Filter countries by region
-filterDropdown.addEventListener("change", (e) => {
-    const selectedRegion = e.target.value;
-    const filteredCountries = countries.filter(country => {
-        return selectedRegion === "" || country.region === selectedRegion;
-    });
-    
-    countriesContainer.innerHTML = ""; // Clear previous countries
-    displayedCountries = filteredCountries.slice(0, currentPage * pageSize);
-    displayedCountries.forEach(country => {
-        const countryCard = document.createElement("div");
-        countryCard.classList.add("country-card");
-        countryCard.innerHTML = `
-            <img src="${country.flags.svg}" alt="${country.name.common} flag">
-            <h2>${country.name.common}</h2>
-            <button onclick="toggleFavorite('${country.name.common}')">
-                ${favorites.includes(country.name.common) ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
-            <button onclick="showDetails('${country.name.common}')">Details</button>
-        `;
-        countriesContainer.appendChild(countryCard);
-    });
-});
