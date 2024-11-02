@@ -15,7 +15,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px; /* Increased padding */
+    padding: 20px; 
     background-color: #007BFF;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -24,15 +24,15 @@ header {
 /* Input and Select */
 input[type="text"],
 select {
-    padding: 15px; /* Increased padding */
-    border-radius: 8px; /* Larger border radius */
+    padding: 15px; 
+    border-radius: 8px; 
     border: 1px solid #ccc;
-    font-size: 18px; /* Increased font size */
+    font-size: 18px; 
     transition: box-shadow 0.3s ease;
 }
 
 input[type="text"] {
-    width: 500px; /* Increased width */
+    width: 500px; 
     display: block;
     margin: 0 auto;
 }
@@ -48,7 +48,7 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 30px; /* Increased padding */
+    padding: 30px; 
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -56,7 +56,7 @@ main {
 /* Country Cards Container */
 #countries-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Set to 4 columns */
+    grid-template-columns: repeat(4, 1fr); 
     gap: 20px;
     margin-bottom: 20px;
     width: 100%;
@@ -69,7 +69,7 @@ main {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 20px; /* Increased padding */
+    padding: 20px; 
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
@@ -77,22 +77,22 @@ main {
 .country-card img {
     width: 100%;
     border-radius: 10px;
-    height: 150px; /* Increased height */
+    height: 150px; 
     object-fit: cover;
 }
 
 button {
     cursor: pointer;
-    padding: 12px 20px; /* Larger button padding */
+    padding: 12px 20px; 
     margin-top: 15px;
-    font-size: 16px; /* Larger font size */
+    font-size: 16px; 
 }
 
 /* Favorites Section */
 .favorites {
     margin-top: 30px;
     background-color: #e0e0e0;
-    padding: 20px; /* Increased padding */
+    padding: 20px; 
     border-radius: 10px;
     width: 100%;
     max-width: 1200px;
@@ -124,21 +124,21 @@ button {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px; /* Increased max-width */
-    padding: 25px; /* Increased padding */
+    max-width: 600px; 
+    padding: 25px; 
     text-align: left;
 }
 
 .country-flag {
     width: 100%;
-    max-width: 350px; /* Larger max-width */
+    max-width: 350px; 
     border-radius: 10px;
 }
 
 /* Media Queries */
 @media (max-width: 1200px) {
     #countries-container {
-        grid-template-columns: repeat(2, 1fr); /* Adjusted for smaller screens */
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
 
@@ -147,3 +147,92 @@ button {
         grid-template-columns: 1fr;
     }
 }
+.country-card img {
+    width: 100%;
+    border-radius: 10px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px; 
+}
+
+.country-card p {
+    margin-top: 10px; 
+}
+
+#country-details img.country-flag {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 10px;
+    margin-bottom: 20px; 
+}
+
+#country-details p {
+    margin-top: 10px; 
+}
+
+
+
+
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    padding: 10px 20px; 
+    background-color: #007BFF; 
+    color: white;
+}
+
+.container {
+    display: flex; 
+    height: calc(100vh - 60px); 
+}
+
+aside {
+    width: 250px; 
+    background-color: #f0f0f0; 
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; 
+}
+
+main {
+    flex-grow: 1; 
+    padding: 15px;
+    display: flex;
+    flex-direction: column;}
+
+.country-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: center;
+    background-color: white; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
+}
+
+.favorite-item {
+    padding: 5px;
+    margin: 5px 0;
+    border-bottom: 1px solid #ccc;
+    background-color: white; 
+}
+
+.favorite-item:last-child {
+    border-bottom: none; 
+}
+
+h1 {
+    margin: 0;
+}
+
+h2 {
+    margin-top: 0; 
+}
+
+
+

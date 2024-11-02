@@ -1,9 +1,7 @@
-// Function to go back to the previous page
 function goBack() {
     window.history.back();
 }
 
-// Function to get query parameters
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -17,7 +15,6 @@ function getQueryParams() {
     };
 }
 
-// Display country details
 const countryData = getQueryParams();
 if (countryData.name) {
     document.getElementById('country-name').innerText = countryData.name;

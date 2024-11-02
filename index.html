@@ -11,27 +11,25 @@
         <h1>Countries List</h1>
         <input type="text" id="search-input" placeholder="Search for a country...">
         <select id="filter-dropdown">
-            <!-- <option value="all">Filter by Country</option> -->
             <option value="">Filter by Country</option>
+            <option value="Africa">Africa</option>
+            <option value="Americas">Americas</option>
             <option value="Asia">Asia</option>
             <option value="Europe">Europe</option>
+            <option value="Oceania">Oceania</option>
         </select>
+        
     </header>
-    <main>
-        <div id="countries-container"></div>
-        <button id="load-more">Show More</button>
-        <div id="countries-container"></div>
-
-        <div id="favorites-section" style="display: none;">
+    <div class="container">
+        <aside id="favorites-section">
             <h2>Favorites</h2>
             <div id="favorites-list"></div>
-        </div>
-        
-    </main>
-    <aside id="favorites-section" style="display: none;">
-        <h2>Favorites</h2>
-        <div id="favorites-list"></div>
-    </aside>
+        </aside>
+        <main>
+            <div id="countries-container"></div>
+            <button id="load-more">Show More</button>
+        </main>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
