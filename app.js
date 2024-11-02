@@ -96,7 +96,18 @@ function updateFavorites() {
 function showDetails(countryName) {
     const country = countries.find(c => c.name.common === countryName);
     if (country) {
-        alert(`Name: ${country.name.common}\nCapital: ${country.capital}\nRegion: ${country.region}\nPopulation: ${country.population}\nArea: ${country.area} km²\nLanguages: ${Object.values(country.languages).join(", ")}`);
+        const queryParams = new URLSearchParams({
+            name: country.name.common,
+            capital: country.capital,
+            region: country.region,
+            population: country.population,
+            area: country.area,
+            flag: country.flags.svg,
+            languages: Object.values(country.languages).join(",")
+        }).toString();
+
+        // Navigate to the details page with query parameters
+        window.location.href = `country-details.html?${queryParams}`;
     }
 }
 
