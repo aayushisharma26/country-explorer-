@@ -9,41 +9,11 @@
 <body>
     <header>
         <h1 id="country-name"></h1>
-        <button onclick="goBack()">Back</button>
+        <button class="back-button" onclick="goBack()">Back</button>
     </header>
     <main>
         <div id="country-details"></div>
     </main>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                name: params.get('name'),
-                capital: params.get('capital'),
-                region: params.get('region'),
-                population: params.get('population'),
-                area: params.get('area'),
-                flag: params.get('flag'),
-                languages: params.get('languages').split(',')
-            };
-        }
-
-        const countryData = getQueryParams();
-        if (countryData.name) {
-            document.getElementById('country-name').innerText = countryData.name;
-            document.getElementById('country-details').innerHTML = `
-                <img src="${countryData.flag}" alt="${countryData.name} flag" style="width: 300px; border-radius: 8px;">
-                <p><strong>Capital:</strong> ${countryData.capital}</p>
-                <p><strong>Region:</strong> ${countryData.region}</p>
-                <p><strong>Population:</strong> ${countryData.population}</p>
-                <p><strong>Area:</strong> ${countryData.area} km²</p>
-                <p><strong>Languages:</strong> ${countryData.languages.join(", ")}</p>
-            `;
-        }
-    </script>
+    <script src="country-details.js"></script> <!-- Link to external JavaScript file -->
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +10,12 @@
     <header>
         <h1>Countries List</h1>
         <input type="text" id="search-input" placeholder="Search for a country...">
+        <select id="filter-dropdown">
+            <!-- <option value="all">Filter by Country</option> -->
+            <option value="">Filter by Country</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+        </select>
     </header>
     <main>
         <div id="countries-container"></div>
@@ -23,5 +28,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-
-

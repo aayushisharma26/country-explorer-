@@ -3,6 +3,7 @@ const countriesContainer = document.getElementById("countries-container");
 const searchInput = document.getElementById("search-input");
 const loadMoreButton = document.getElementById("load-more");
 const favoritesContainer = document.getElementById("favorites-list");
+const filterDropdown = document.getElementById("filter-dropdown");
 
 let countries = [];
 let displayedCountries = [];
@@ -23,6 +24,7 @@ function displayCountries() {
     const endIndex = startIndex + pageSize;
     displayedCountries = countries.slice(startIndex, endIndex);
 
+    countriesContainer.innerHTML = ""; // Clear previous countries
     displayedCountries.forEach(country => {
         const countryCard = document.createElement("div");
         countryCard.classList.add("country-card");
@@ -118,3 +120,27 @@ window.onload = () => {
     updateFavorites();
     loadCountries();
 };
+
+// Filter countries by region
+filterDropdown.addEventListener("change", (e) => {
+    const selectedRegion = e.target.value;
+    const filteredCountries = countries.filter(country => {
+        return selectedRegion === "" || country.region === selectedRegion;
+    });
+    
+    countriesContainer.innerHTML = ""; // Clear previous countries
+    displayedCountries = filteredCountries.slice(0, currentPage * pageSize);
+    displayedCountries.forEach(country => {
+        const countryCard = document.createElement("div");
+        countryCard.classList.add("country-card");
+        countryCard.innerHTML = `
+            <img src="${country.flags.svg}" alt="${country.name.common} flag">
+            <h2>${country.name.common}</h2>
+            <button onclick="toggleFavorite('${country.name.common}')">
+                ${favorites.includes(country.name.common) ? 'Remove from Favorites' : 'Add to Favorites'}
+            </button>
+            <button onclick="showDetails('${country.name.common}')">Details</button>
+        `;
+        countriesContainer.appendChild(countryCard);
+    });
+});
