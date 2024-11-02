@@ -10,7 +10,6 @@ body {
     color: #333;
 }
 
-/* Header */
 header {
     display: flex;
     align-items: center;
@@ -233,6 +232,3 @@ h1 {
 h2 {
     margin-top: 0; 
 }
-
-
-
