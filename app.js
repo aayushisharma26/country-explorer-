@@ -1,22 +1,24 @@
 
-
 const API_URL = "https://restcountries.com/v3.1/all";
 const countriesContainer = document.getElementById("countries-container");
 const searchInput = document.getElementById("search-input");
 const loadMoreButton = document.getElementById("load-more");
 const filterDropdown = document.getElementById("filter-dropdown");
+const favoritesIcon = document.getElementById("favorites-icon");
+const backButton = document.getElementById("back-button");
 
 let countries = [];
 let displayedCountries = [];
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 const pageSize = 10;
 let currentPage = 1;
+let showFavoritesOnly = false;
 
 async function loadCountries() {
     const response = await fetch(API_URL);
     countries = await response.json();
     displayCountries();
-    updateLoadMoreButton(); 
+    updateLoadMoreButton();
 }
 
 function displayCountries() {
@@ -24,19 +26,25 @@ function displayCountries() {
     const endIndex = startIndex + pageSize;
 
     const selectedFilter = filterDropdown.value;
-    const filteredCountries = countries.filter(country => {
-        if (selectedFilter === "") return true; 
-        return country.region === selectedFilter; 
+    let filteredCountries = countries.filter(country => {
+        if (selectedFilter === "") return true;
+        return country.region === selectedFilter;
     });
 
     const searchQuery = searchInput.value.toLowerCase();
-    const searchedCountries = filteredCountries.filter(country =>
-        country.name.common.toLowerCase().includes(searchQuery) 
+    filteredCountries = filteredCountries.filter(country =>
+        country.name.common.toLowerCase().includes(searchQuery)
     );
 
-    displayedCountries = searchedCountries.slice(0, endIndex); 
+    if (showFavoritesOnly) {
+        filteredCountries = filteredCountries.filter(country =>
+            favorites.includes(country.name.common)
+        );
+    }
 
-    countriesContainer.innerHTML = ""; 
+    displayedCountries = filteredCountries.slice(startIndex, endIndex);
+
+    countriesContainer.innerHTML = "";
     displayedCountries.forEach(country => {
         const countryCard = document.createElement("div");
         countryCard.classList.add("country-card");
@@ -69,7 +77,7 @@ function toggleFavorite(countryName) {
         }
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    displayCountries(); // Refresh the displayed countries to update favorite status
+    displayCountries();
 }
 
 function showDetails(countryName) {
@@ -103,11 +111,27 @@ window.onload = () => {
 };
 
 filterDropdown.addEventListener("change", () => {
-    currentPage = 1; 
-    displayCountries(); 
+    currentPage = 1;
+    displayCountries();
 });
 
 searchInput.addEventListener("input", () => {
+    currentPage = 1;
+    displayCountries();
+});
+
+favoritesIcon.addEventListener("click", () => {
+    showFavoritesOnly = !showFavoritesOnly;
+    favoritesIcon.textContent = showFavoritesOnly ? "⭐ Showing Favorites" : "⭐ Show Favorites";
+    currentPage = 1; 
+    displayCountries();
+    backButton.style.display = showFavoritesOnly ? "block" : "none";
+});
+
+backButton.addEventListener("click", () => {
+    showFavoritesOnly = false; 
+    favoritesIcon.textContent = "⭐ Show Favorites"; 
     currentPage = 1; 
     displayCountries(); 
+    backButton.style.display = "none"; 
 });

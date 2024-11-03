@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,17 +8,31 @@
 </head>
 <body>
     <header>
-        <h1>Countries List</h1>
-        <input type="text" id="search-input" placeholder="Search for a country...">
-        <select id="filter-dropdown">
-            <option value="">Filter by Country</option>
-            <option value="Africa">Africa</option>
-            <option value="Americas">Americas</option>
-            <option value="Asia">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="Oceania">Oceania</option>
-        </select>
+        <h1>Country Explorer</h1>
+        <button id="back-button" style="display: none;">Back</button>
     </header>
+
+    <div class="search-filter-container">
+        <div class="input-group">
+            <div class="input-container">
+                <span class="icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Search for a country...">
+            </div>
+            <div class="input-container">
+                <span class="icon">🌍</span>
+                <select id="filter-dropdown">
+                    <option value="">Filter by Region</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Americas">Americas</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Oceania">Oceania</option>
+                </select>
+            </div>
+            <button id="favorites-icon" class="favorites-icon">⭐ Show Favorites</button>
+        </div>
+    </div>
+
     <div class="container">
         <main>
             <div id="countries-container"></div>
