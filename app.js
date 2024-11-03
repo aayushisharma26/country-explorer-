@@ -123,4 +123,4 @@ filterDropdown.addEventListener("change", () => {
 searchInput.addEventListener("input", () => {
     currentPage = 1; 
     displayCountries(); 
-});
+})
