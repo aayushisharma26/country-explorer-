@@ -43,25 +43,30 @@ function displayCountries() {
     }
 
     displayedCountries = filteredCountries.slice(startIndex, endIndex);
-
     countriesContainer.innerHTML = "";
-    displayedCountries.forEach(country => {
-        const countryCard = document.createElement("div");
-        countryCard.classList.add("country-card");
 
-        const isFavorite = favorites.includes(country.name.common);
+    if (displayedCountries.length === 0 && showFavoritesOnly) {
+        countriesContainer.innerHTML = "<p>No favorite countries to display.</p>";
+        loadMoreButton.style.display = "none";
+    } else {
+        displayedCountries.forEach(country => {
+            const countryCard = document.createElement("div");
+            countryCard.classList.add("country-card");
 
-        countryCard.innerHTML = `
-            <img src="${country.flags.svg}" alt="${country.name.common} flag">
-            <h2>${country.name.common}</h2>
-            <button onclick="toggleFavorite('${country.name.common}')">
-                <span class="heart-icon">${isFavorite ? '❤️' : '🤍'}</span> 
-                ${isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
-            <button onclick="showDetails('${country.name.common}')">Details</button>
-        `;
-        countriesContainer.appendChild(countryCard);
-    });
+            const isFavorite = favorites.includes(country.name.common);
+
+            countryCard.innerHTML = `
+                <img src="${country.flags.svg}" alt="${country.name.common} flag">
+                <h2>${country.name.common}</h2>
+                <button onclick="toggleFavorite('${country.name.common}')">
+                    <span class="heart-icon">${isFavorite ? '❤️' : '🤍'}</span> 
+                    ${isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+                </button>
+                <button onclick="showDetails('${country.name.common}')">Details</button>
+            `;
+            countriesContainer.appendChild(countryCard);
+        });
+    }
 
     updateLoadMoreButton();
 }
@@ -98,7 +103,7 @@ function showDetails(countryName) {
 }
 
 function updateLoadMoreButton() {
-    loadMoreButton.style.display = (currentPage * pageSize < countries.length) ? "block" : "none";
+    loadMoreButton.style.display = (currentPage * pageSize < countries.length && !showFavoritesOnly) ? "block" : "none";
 }
 
 loadMoreButton.addEventListener("click", () => {
@@ -123,15 +128,15 @@ searchInput.addEventListener("input", () => {
 favoritesIcon.addEventListener("click", () => {
     showFavoritesOnly = !showFavoritesOnly;
     favoritesIcon.textContent = showFavoritesOnly ? "⭐ Showing Favorites" : "⭐ Show Favorites";
-    currentPage = 1; 
+    currentPage = 1;
     displayCountries();
     backButton.style.display = showFavoritesOnly ? "block" : "none";
 });
 
 backButton.addEventListener("click", () => {
-    showFavoritesOnly = false; 
-    favoritesIcon.textContent = "⭐ Show Favorites"; 
-    currentPage = 1; 
-    displayCountries(); 
-    backButton.style.display = "none"; 
+    showFavoritesOnly = false;
+    favoritesIcon.textContent = "⭐ Show Favorites";
+    currentPage = 1;
+    displayCountries();
+    backButton.style.display = "none";
 });

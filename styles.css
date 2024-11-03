@@ -13,30 +13,42 @@ body {
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; 
     padding: 20px;
     background-color: #007BFF;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
 #back-button {
     background-color: white;
     color: #007BFF;
     border: none;
-    padding: 12px 25px;
+    padding: 15px 30px; 
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px; 
+    font-weight: bold; 
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px; 
 }
 
-#back-button:hover {
+#back-button{
     background-color: #0056b3;
     color: white;
 }
 
-/* Add your other CSS styles here */
+
+
 
 input[type="text"],
 select {
@@ -104,24 +116,6 @@ button {
     border-radius: 10px;
     width: 100%;
     max-width: 1200px;
-}
-
-.back-button,
-#back-button {
-    background-color: white;
-    color: #007BFF;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.back-button:hover,
-#back-button:hover {
-    background-color: #0056b3;
-    color: white;
 }
 
 #country-details {
@@ -214,3 +208,4 @@ h2 {
 #favorites-page {
     padding: 20px;
 }
+
