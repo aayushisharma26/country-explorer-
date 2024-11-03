@@ -1,9 +1,9 @@
+
+
 const API_URL = "https://restcountries.com/v3.1/all";
 const countriesContainer = document.getElementById("countries-container");
 const searchInput = document.getElementById("search-input");
 const loadMoreButton = document.getElementById("load-more");
-const favoritesContainer = document.getElementById("favorites-list");
-const favoritesSection = document.getElementById("favorites-section");
 const filterDropdown = document.getElementById("filter-dropdown");
 
 let countries = [];
@@ -40,7 +40,7 @@ function displayCountries() {
     displayedCountries.forEach(country => {
         const countryCard = document.createElement("div");
         countryCard.classList.add("country-card");
-        
+
         const isFavorite = favorites.includes(country.name.common);
 
         countryCard.innerHTML = `
@@ -69,19 +69,7 @@ function toggleFavorite(countryName) {
         }
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    updateFavorites();
-    displayCountries(); 
-}
-
-function updateFavorites() {
-    favoritesContainer.innerHTML = "";
-    favorites.forEach(fav => {
-        const favoriteItem = document.createElement("div");
-        favoriteItem.classList.add("favorite-item");
-        favoriteItem.textContent = fav;
-        favoritesContainer.appendChild(favoriteItem);
-    });
-    favoritesSection.style.display = favorites.length > 0 ? "block" : "none";
+    displayCountries(); // Refresh the displayed countries to update favorite status
 }
 
 function showDetails(countryName) {
@@ -111,7 +99,6 @@ loadMoreButton.addEventListener("click", () => {
 });
 
 window.onload = () => {
-    updateFavorites();
     loadCountries();
 };
 
@@ -123,4 +110,4 @@ filterDropdown.addEventListener("change", () => {
 searchInput.addEventListener("input", () => {
     currentPage = 1; 
     displayCountries(); 
-})
+});
