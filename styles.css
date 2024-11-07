@@ -86,7 +86,7 @@ main {
 }
 
 .country-card {
-    background-color: #fff;
+    background-color: red;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
@@ -196,7 +196,6 @@ button {
 #favorites-icon:hover {
     background-color: #0056b3;
 }
-
 h1, h2 {
     margin: 0;
 }

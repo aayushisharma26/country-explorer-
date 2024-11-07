@@ -28,16 +28,27 @@
                     <option value="Oceania">Oceania</option>
                 </select>
             </div>
-            <button id="favorites-icon" class="favorites-icon">⭐ Show Favorites</button>
+            <div class="input-container">
+                <span class="icon">🗣️</span>
+                <select id="language-dropdown">
+                    <option value="">Filter by Language</option>
+                    <option value="english">English</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="french">French</option>
+                    <!-- Add more languages as needed -->
+                </select>
+            </div>
+            <button id="favorites-icon" class="favorites-icon">❤️</button>
         </div>
     </div>
+    
 
     <div class="container">
         <main>
             <div id="countries-container"></div>
             <button id="load-more">Show More</button>
-            <div id="no-favorites" style="display: none;">No favorite countries to display.</div> 
-            <button id="back-button" style="display: none;">Go Back</button> 
+            <div id="no-favorites" style="display: none;">No favorite countries to display.</div> <!-- Added here -->
+            <button id="back-button" style="display: none;">Go Back</button> <!-- Moved here -->
         </main>
     </div>
     <script src="app.js"></script>
