@@ -1,4 +1,3 @@
-
 const API_URL = "https://restcountries.com/v3.1/all";
 const countriesContainer = document.getElementById("countries-container");
 const searchInput = document.getElementById("search-input");
@@ -7,24 +6,23 @@ const filterDropdown = document.getElementById("filter-dropdown");
 const languageDropdown = document.getElementById("language-dropdown");
 const favoritesIcon = document.getElementById("favorites-icon");
 const backButton = document.getElementById("back-button");
+const sidebarContent = document.getElementById("sidebar-content");
 
 let countries = [];
 let displayedCountries = [];
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-const pageSize = 10;
+const pageSize = 8; 
 let currentPage = 1;
 let showFavoritesOnly = false;
 
-// Debounce function for search input
 function debounce(func, delay) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, args), delay);
     };
 }
 
-// Load countries data
 async function loadCountries() {
     try {
         const response = await fetch(API_URL);
@@ -36,7 +34,6 @@ async function loadCountries() {
     }
 }
 
-// Display countries
 function displayCountries() {
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -66,7 +63,10 @@ function displayCountries() {
 
     displayedCountries = filteredCountries.slice(startIndex, endIndex);
 
-    // Append countries instead of replacing them
+    if (currentPage === 1) {
+        countriesContainer.innerHTML = "";
+    }
+
     displayedCountries.forEach(country => {
         const countryCard = document.createElement("div");
         countryCard.classList.add("country-card");
@@ -80,37 +80,17 @@ function displayCountries() {
                 <span class="heart-icon">${isFavorite ? '❤️' : '🤍'}</span> 
                 ${isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
             </button>
-            <button onclick="showDetails('${country.name.common}')">Details</button>
         `;
-        countriesContainer.appendChild(countryCard); // Append country cards
+
+        countryCard.addEventListener("click", () => showDetails(country.name.common));
+
+        countriesContainer.appendChild(countryCard); 
     });
 
     updateLoadMoreButton();
+    updateSidebarFavorites();
 }
 
-// Toggle favorite countries
-function toggleFavorite(countryName) {
-    if (favorites.includes(countryName)) {
-        // Remove from favorites
-        favorites = favorites.filter(fav => fav !== countryName);
-    } else {
-        if (favorites.length < 5) {
-            favorites.push(countryName);
-        } else {
-            alert("You can only have 5 favorites.");
-        }
-    }
-
-    // Update favorites in localStorage
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-
-    // Re-render countries
-    countriesContainer.innerHTML = ""; 
-    currentPage = 1;
-    displayCountries();
-}
-
-// Show details of selected country
 function showDetails(countryName) {
     const country = countries.find(c => c.name.common === countryName);
     if (country) {
@@ -128,56 +108,78 @@ function showDetails(countryName) {
     }
 }
 
-// Update load more button visibility
 function updateLoadMoreButton() {
-    loadMoreButton.style.display = (currentPage * pageSize < countries.length && !showFavoritesOnly) ? "block" : "none";
+    const selectedFilter = filterDropdown.value;
+    const selectedLanguage = languageDropdown.value.toLowerCase();
+    const searchQuery = searchInput.value.toLowerCase();
+
+    let filteredCountries = countries.filter(country => {
+        if (selectedFilter !== "" && country.region !== selectedFilter) return false;
+        if (selectedLanguage !== "" && !Object.values(country.languages || {}).some(lang => lang.toLowerCase() === selectedLanguage)) return false;
+        if (searchQuery !== "" && !country.name.common.toLowerCase().includes(searchQuery)) return false;
+        if (showFavoritesOnly && !favorites.includes(country.name.common)) return false;
+        return true;
+    });
+
+    const filteredCountriesCount = filteredCountries.length;
+
+    if (filteredCountriesCount <= currentPage * pageSize) {
+        loadMoreButton.style.display = "none";
+    } else {
+        loadMoreButton.style.display = "block";
+    }
 }
 
-// Load more countries
 loadMoreButton.addEventListener("click", () => {
     currentPage++;
     displayCountries();
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 });
 
-// Event listeners for filters
 filterDropdown.addEventListener("change", () => {
     currentPage = 1;
-    countriesContainer.innerHTML = ""; 
+    countriesContainer.innerHTML = "";
     displayCountries();
 });
 
 languageDropdown.addEventListener("change", () => {
     currentPage = 1;
-    countriesContainer.innerHTML = ""; 
+    countriesContainer.innerHTML = "";
     displayCountries();
 });
 
 searchInput.addEventListener("input", debounce(() => {
     currentPage = 1;
-    countriesContainer.innerHTML = ""; 
+    countriesContainer.innerHTML = "";
     displayCountries();
 }, 300));
 
-// Toggle showing favorites only
-favoritesIcon.addEventListener("click", () => {
-    showFavoritesOnly = !showFavoritesOnly;
-    favoritesIcon.textContent = showFavoritesOnly ? "⭐ Showing Favorites" : "⭐ Show Favorites";
-    currentPage = 1;
-    countriesContainer.innerHTML = ""; 
-    displayCountries();
-    backButton.style.display = showFavoritesOnly ? "block" : "none";
-});
+function updateSidebarFavorites() {
+    sidebarContent.innerHTML = ""; 
+    if (favorites.length > 0) {
+        favorites.forEach(favCountry => {
+            const favItem = document.createElement("li");
+            favItem.textContent = favCountry;
+            sidebarContent.appendChild(favItem);
+        });
+    } else {
+        sidebarContent.innerHTML = "<p>No favorites selected</p>";
+    }
+}
 
-// Go back from favorites
-backButton.addEventListener("click", () => {
-    showFavoritesOnly = false;
-    favoritesIcon.textContent = "⭐ Show Favorites";
-    currentPage = 1;
-    countriesContainer.innerHTML = ""; 
-    displayCountries();
-    backButton.style.display = "none";
-});
+function toggleFavorite(countryName) {
+    const isFavorite = favorites.includes(countryName);
 
-// Load initial data on window load
+    if (isFavorite) {
+        favorites = favorites.filter(fav => fav !== countryName);
+    } else {
+        favorites.push(countryName);
+    }
+
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+
+    displayCountries(); 
+    updateSidebarFavorites(); 
+}
+
 window.onload = loadCountries;

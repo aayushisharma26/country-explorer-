@@ -35,13 +35,10 @@
                     <option value="english">English</option>
                     <option value="spanish">Spanish</option>
                     <option value="french">French</option>
-                    <!-- Add more languages as needed -->
                 </select>
             </div>
-            <button id="favorites-icon" class="favorites-icon">❤️</button>
         </div>
     </div>
-    
 
     <div class="container">
         <main>
@@ -51,6 +48,16 @@
             <button id="back-button" style="display: none;">Go Back</button> <!-- Moved here -->
         </main>
     </div>
+
+    <aside class="sidebar">
+        <h2>Favorites</h2>
+        <ul>
+            <li id="favorites-item">Favorite Countries</li>
+        </ul>
+        <div id="sidebar-content">
+        </div>
+    </aside>
+
     <script src="app.js"></script>
 </body>
 </html>

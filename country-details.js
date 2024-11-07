@@ -1,3 +1,4 @@
+// Function to go back to the previous page
 function goBack() {
     window.history.back();
 }
@@ -11,11 +12,12 @@ function getQueryParams() {
         population: params.get('population'),
         area: params.get('area'),
         flag: params.get('flag'),
-        languages: params.get('languages').split(',')
+        languages: params.get('languages') ? params.get('languages').split(',') : []
     };
 }
 
 const countryData = getQueryParams();
+
 if (countryData.name) {
     document.getElementById('country-name').innerText = countryData.name;
     document.getElementById('country-details').innerHTML = `
